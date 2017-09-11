@@ -5,7 +5,8 @@ using UnityEngine;
 public class Brick : MonoBehaviour {
 
 	public static int breakableCount = 0;
-
+	public AudioClip crack;
+	public GameObject smoke;
 	private int maxHits;
 	private int timesHit;
 	public Sprite[] hitSprites;
@@ -27,7 +28,7 @@ public class Brick : MonoBehaviour {
 	}
 
 	void OnCollisionEnter2D (Collision2D col){
-		
+		AudioSource.PlayClipAtPoint (crack, transform.position);
 		if (isBreakable) {
 			handleHits ();
 		}
@@ -41,6 +42,8 @@ public class Brick : MonoBehaviour {
 		if (timesHit >= maxHits) {
 			breakableCount--;
 			levelmanager.brickDestroyed ();
+			GameObject smokePuff = Instantiate (smoke, gameObject.transform.position, Quaternion.identity) as GameObject;
+			smokePuff.GetComponent<ParticleSystem>().startColor = gameObject.GetComponent<SpriteRenderer> ().color;
 			Destroy (gameObject);
 			//print (breakableCount);
 		} else {

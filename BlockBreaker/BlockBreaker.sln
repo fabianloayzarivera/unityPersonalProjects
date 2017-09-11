@@ -1,7 +1,7 @@
+﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2008
-
-Project("{3B487057-9FA2-B477-56D8-6E58076F93E6}") = "BlockBreaker", "Assembly-CSharp.csproj", "{B673CBF3-9144-4F0F-B8B9-41716440C694}"
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlockBreaker", "Assembly-CSharp.csproj", "{B673CBF3-9144-4F0F-B8B9-41716440C694}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
