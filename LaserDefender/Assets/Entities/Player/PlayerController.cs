@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour {
 	public float padding = 1f;
 	public float laserSpeed = 0f;
 	public float fireRate = 0.2f;
+	public float health = 100f;
 	private float xmin;
 	private float xmax;
 
@@ -31,7 +32,7 @@ public class PlayerController : MonoBehaviour {
 		} 
 		if (Input.GetKeyDown (KeyCode.Space)) {
 			InvokeRepeating ("fire", 0.00001f, fireRate);
-			fire ();
+
 		}
 		if (Input.GetKeyUp (KeyCode.Space)) {
 			CancelInvoke ("fire");
@@ -41,7 +42,22 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	void fire(){
-		GameObject shot = Instantiate (laserShot, transform.position, Quaternion.identity) as GameObject;
+		Vector3 offset = new Vector3 (0f, 1f, 0f);
+		GameObject shot = Instantiate (laserShot, transform.position + offset, Quaternion.identity) as GameObject;
 		shot.GetComponent<Rigidbody2D>().velocity = new Vector3 (0f, laserSpeed, 0f);
+	}
+
+	void OnTriggerEnter2D(Collider2D col){
+
+		EnemyShotScript shot = col.gameObject.GetComponent<EnemyShotScript> ();
+		if (shot != null) {
+			print ("Player Hit by EnemyShot!");
+			health -= shot.getDamage ();
+			shot.hit ();
+			if (health <= 0) {
+				Destroy (gameObject);
+			}
+		}
+
 	}
 }

@@ -1,7 +1,7 @@
-﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LaserDefender", "Assembly-CSharp.csproj", "{2739083D-BD6A-EF71-7844-B438E0DFC5F5}"
+# Visual Studio 2008
+
+Project("{5CD83640-1B18-69D6-AB46-62B15A8045CD}") = "LaserDefender", "Assembly-CSharp.csproj", "{2739083D-BD6A-EF71-7844-B438E0DFC5F5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
