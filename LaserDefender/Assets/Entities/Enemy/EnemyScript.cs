@@ -12,7 +12,7 @@ public class EnemyScript : MonoBehaviour {
 		
 		LaserShotScript shot = col.gameObject.GetComponent<LaserShotScript> ();
 		if (shot != null) {
-			print ("Enemy Hit by LaserShot!");
+			//print ("Enemy Hit by LaserShot!");
 			health -= shot.getDamage ();
 			shot.hit ();
 			if (health <= 0) {
