@@ -9,8 +9,13 @@ public class PlayerController : MonoBehaviour {
 	public float laserSpeed = 0f;
 	public float fireRate = 0.2f;
 	public float health = 100f;
+	public string levelToLoad = "Win Screen";
 	private float xmin;
 	private float xmax;
+	private LevelManager levelManager;
+
+	public AudioClip fireSound;
+	public AudioClip deathSound;
 
 	// Use this for initialization
 	void Start () {
@@ -45,6 +50,7 @@ public class PlayerController : MonoBehaviour {
 		Vector3 offset = new Vector3 (0f, 1f, 0f);
 		GameObject shot = Instantiate (laserShot, transform.position + offset, Quaternion.identity) as GameObject;
 		shot.GetComponent<Rigidbody2D>().velocity = new Vector3 (0f, laserSpeed, 0f);
+		AudioSource.PlayClipAtPoint (fireSound, transform.position);
 	}
 
 	void OnTriggerEnter2D(Collider2D col){
@@ -55,9 +61,16 @@ public class PlayerController : MonoBehaviour {
 			health -= shot.getDamage ();
 			shot.hit ();
 			if (health <= 0) {
-				Destroy (gameObject);
+				die ();
 			}
 		}
 
+	}
+
+	void die(){
+		Destroy (gameObject);
+		AudioSource.PlayClipAtPoint (deathSound, transform.position);
+		levelManager = GameObject.Find ("LevelManager").GetComponent<LevelManager> ();
+		levelManager.LoadLevel (levelToLoad);
 	}
 }

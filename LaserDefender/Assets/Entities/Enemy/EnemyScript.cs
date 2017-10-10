@@ -7,6 +7,22 @@ public class EnemyScript : MonoBehaviour {
 	public GameObject enemyShot;
 	public float enemyShotSpeed = 5f;
 	public float shotsPerSeconds = 0.5f;
+	public int scoreValue = 10;
+	private ScoreScript scoreKeeper;
+
+	public AudioClip fireSound;
+	public AudioClip deathSound;
+
+	void Start(){
+		scoreKeeper = GameObject.Find ("Score").GetComponent<ScoreScript> ();
+
+	}
+	void Update(){
+		float probability = Time.deltaTime * shotsPerSeconds;
+		if(Random.value < probability){
+			fire ();
+		}
+	}
 
 	void OnTriggerEnter2D(Collider2D col){
 		
@@ -16,26 +32,22 @@ public class EnemyScript : MonoBehaviour {
 			health -= shot.getDamage ();
 			shot.hit ();
 			if (health <= 0) {
-				Destroy (gameObject);
-
+				die ();
 			}
 		}
 		
-	}
-
-	void Start(){
-		
-	}
-	void Update(){
-		float probability = Time.deltaTime * shotsPerSeconds;
-		if(Random.value < probability){
-			fire ();
-		}
 	}
 
 	void fire(){
 		Vector3 startPosition = transform.position + new Vector3 (0f, -1f, 0f);
 		GameObject shot = Instantiate (enemyShot, startPosition, Quaternion.identity) as GameObject;
 		shot.GetComponent<Rigidbody2D>().velocity = new Vector3 (0f, -enemyShotSpeed, 0f);
+		AudioSource.PlayClipAtPoint (fireSound, transform.position);
+	}
+
+	void die(){
+		Destroy (gameObject);
+		AudioSource.PlayClipAtPoint (deathSound, transform.position);
+		scoreKeeper.scorePoints (scoreValue);
 	}
 }
